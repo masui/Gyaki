@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, target-densitydpi=device-dpi, user-scalable=no">
+    <style>
+      body {
+        background: whitesmoke;
+        margin: 0;
+        padding: 0;
+      }
+      canvas {
+        background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+    <script type="text/javascript">
+    var gyazoUserID = <%= @gyazoUserID ? "\"#{@gyazoUserID}\"" : "null" %>;
+    var gyazoImageID = <%= @gyazoImageID ? "\"#{@gyazoImageID}\"" : "null" %>;
+    </script>
+    <script src='/javascripts/draw.js'></script>
+</body>
+</html>
+
+
+
