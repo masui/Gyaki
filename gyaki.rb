@@ -19,6 +19,11 @@ get '/gyazodata/:id' do |id|
   res.read_body
 end
 
+get '/bookmarklet/:id' do |id|
+  @id = id
+  erb :bookmarklet
+end
+
 # JSからGyazoに直接アップロードするのが難しいので
 # Gyaki.com/uploadを介してアップロードする
 post '/upload' do
