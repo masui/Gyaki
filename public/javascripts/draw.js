@@ -1,5 +1,7 @@
-// alert(window.orientation); // tabletのとき0, 90, 180, など
-
+//
+// 「楽ギャキ」システム Gyaki.com
+//  2013/01/05 11:43:09 masui
+//
 var canvas;
 var uploadButton;
 var colorButton = [];
@@ -39,8 +41,11 @@ var resize = function(){
     if(height < canvasSize) canvasSize = height;
 
     if(gyazoImageID){
+	// http://paulownia.hatenablog.com/entry/20100602/1275493299
+	// Gyazo.comから画像を取得するとクロスドメインでエラーになるので
+	// Gyaki.com/gyazodataから間接的に画像を取得する
 	var img = new Image();
-	img.src = "/gyazodata/" + gyazoImageID; // + "?" + new Date().getTime();
+	img.src = "/gyazodata/" + gyazoImageID;
 	img.onload = function() {
 	    context.drawImage(img, 0, 0);
 	}
@@ -49,6 +54,8 @@ var resize = function(){
     var orientation = 'portrait';
 
     if(window.orientation){
+	// タブレットのブラウザではwindow.orientationという値に
+	// -90, 0, 90, 180 などの値が入る
 	if(window.orientation == '0' || window.orientation == '180'){
 	    orientation = 'portrait';
 	}
@@ -165,7 +172,7 @@ var initParams = function(){
     lineWidth = 15;
     strokeStyle = "#000";
 
-    context = canvas[0].getContext('2d');
+    context = canvas[0].getContext('2d'); // jQueryは配列になってるらしいのでこういう細工が必要
     
     lineButton[0].on('click', function(e){ lineWidth = 3; });
     lineButton[1].on('click', function(e){ lineWidth = 15; });
@@ -177,7 +184,7 @@ var initParams = function(){
 }
 
 var initCallbacks = function(){
-    canvas.on('touchmove mousemove', function (e) {
+    canvas.on('touchmove mousemove', function(e){
 	e.preventDefault();
 	if ('touchmove' == e.type) {
             var x, y;
@@ -190,9 +197,10 @@ var initCallbacks = function(){
 	x -= canvasX;
 	y -= canvasY;
 	
-	if(x == width/2 && y == width/2) return; //GalaxyNexusのバグ回避
+	if(x == width/2 && y == width/2) return; //GalaxyNexusのバグ? 回避
 	
 	if (drawing) {
+	    // 線の属性はこのように毎回セットしないとうまく描けなかったりする
             context.beginPath();
             context.lineJoin = "round";
             context.lineCap = "round";
@@ -215,7 +223,7 @@ var initCallbacks = function(){
 	}
     });
     
-    canvas.on('touchstart mousedown', function (e) {
+    canvas.on('touchstart mousedown', function(e){
 	e.preventDefault();
 	var x, y;
 	if ('touchstart' == e.type) {
@@ -232,14 +240,13 @@ var initCallbacks = function(){
 	drawing = true;
     });
     
-    canvas.on('touchend mouseup', function (event) {
-	event.preventDefault();
+    canvas.on('touchend mouseup', function(e){
+	e.preventDefault();
 	drawing = false;
     });
     
-    uploadButton.on('click', function(event){
-	var imagedata = canvas[0].toDataURL(); // Gyazoからの画像を使ってるとセキュリティエラーになることあり
-	// http://paulownia.hatenablog.com/entry/20100602/1275493299
+    uploadButton.on('click', function(e){
+	var imagedata = canvas[0].toDataURL();
 	$.ajax({
             type: 'POST',
             url: '/upload',
@@ -249,7 +256,7 @@ var initCallbacks = function(){
 		id: gyazoUserID
             },
             success: function(data, textStatus, jqXHR ) {
-		location.href = data;
+		location.href = data; // Gyazoページに移動
             },
 	});
     });
@@ -261,5 +268,3 @@ initElements();
 initParams();
 initCallbacks();
 resize();
-    
-

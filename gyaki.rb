@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 # -*- ruby -*-
+#
+# 「楽ギャキ」システム Gyaki.com
+#  2013/01/05 11:43:18 masui
+#
 
 require 'rubygems'
 require 'sinatra'
 require 'base64'
 require 'net/http'
 
+# Gyazo.comから画像を取得するとクロスドメインでエラーになるので
+# Gyaki.com/gyazodataから間接的に画像を取得する
 get '/gyazodata/:id' do |id|
   res = Net::HTTP.start("gyazo.com",80){|http|
     http.get("/"+id+".png");
@@ -13,6 +19,8 @@ get '/gyazodata/:id' do |id|
   res.read_body
 end
 
+# JSからGyazoに直接アップロードするのが難しいので
+# Gyaki.com/uploadを介してアップロードする
 post '/upload' do
   id = params[:id]
   data = params[:data]
