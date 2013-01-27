@@ -180,6 +180,7 @@ var initParams = function(){
     
     colorButton[0].on('click', function(e){ strokeStyle = 'rgb(255, 255, 255)'; });
     colorButton[1].on('click', function(e){ strokeStyle = 'rgb(128, 128, 128)'; });
+    // colorButton[1].on('click', function(e){ strokeStyle = 'rgba(128, 128, 128, 0.1)'; });
     colorButton[2].on('click', function(e){ strokeStyle = 'rgb(0, 0, 0)'; });
 }
 
