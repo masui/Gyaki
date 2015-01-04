@@ -5,6 +5,12 @@
 
 app = {}
 
+$ -> 
+  initElements()
+  initParams()
+  initCallbacks()
+  resize()
+
 browserWidth = ->
   return window.innerWidth if window.innerWidth
   return document.body.clientWidth if document.body
@@ -16,7 +22,7 @@ browserHeight = ->
   0
 
 resize = ->
-  window.devicePixelRatio = 1.0;
+  window.devicePixelRatio = 1.0
 
   app.width = browserWidth()
   app.height = browserHeight()
@@ -31,43 +37,47 @@ resize = ->
    	img.onload = ->
       app.context.drawImage(img, 0, 0)
 
-  orientation = 'portrait'
-  if window.orientation
-    # タブレットのブラウザではwindow.orientationという値に
-    # -90, 0, 90, 180 などの値が入る
-   	if window.orientation == '0' || window.orientation == '180'
-      orientation = 'portrait'
+  orientation = 
+    if window.orientation
+      # タブレットのブラウザではwindow.orientationという値に
+      # -90, 0, 90, 180 などの値が入る
+     	if window.orientation == '0' || window.orientation == '180'
+        'portrait'
+      else
+        [app.width, app.height] = [app.height, app.width]
+        'landscape'
     else
-      orientation = 'landscape'
-      tmp = app.width
-      app.width = app.height
-      app.height = tmp
-  else
-    orientation = if app.width > app.height then 'landscape' else 'portraie'
+      if app.width > app.height
+        'landscape'
+      else
+        'portrait'
 
   app.canvas.attr 'width', canvasSize
     .attr('height',canvasSize)
   app.context.fillStyle = '#FFF'
-  app.context.fillRect(0,0,app.width,app.height)
+  app.context.fillRect 0, 0, app.width, app.height
 
   if orientation == 'portrait'
  	  buttonWidth = app.width / 10
  	  buttonHeight = buttonWidth
     gap = (app.width - (buttonWidth * 7)) / 11
 
-    app.uploadButton.css 'top', app.width+gap
+    app.uploadButton
+      .css 'top', app.width+gap
       .css 'left', gap
       .css 'width', buttonWidth
       .css 'height', nbuttonHeight
       .css 'visibility', 'visible'
 
     for i in [0...3]
- 	    app.lineButton[i].css 'top', app.width+gap
+ 	    app.lineButtons[i]
+        .css 'top', app.width+gap
         .css 'left', gap*3+buttonWidth+(buttonWidth+gap)*i
         .css 'width', buttonWidth
         .css 'height', buttonWidth
         .css 'visibility', 'visible'
-      app.colorButton[i].css 'top', app.width+gap
+      app.colorButtons[i]
+        .css 'top', app.width+gap
         .css 'left', gap*7+buttonWidth*4+(buttonWidth+gap)*i
         .css 'width', buttonWidth
         .css 'height', buttonWidth
@@ -77,20 +87,23 @@ resize = ->
     buttonWidth = buttonHeight
     gap = (app.height - (buttonHeight * 7)) / 11
 
-    app.uploadButton.css 'top', gap
+    app.uploadButton
+      .css 'top', gap
       .css 'left', canvasSize+gap
       .css 'width', buttonWidth
       .css 'height', buttonHeight
       .css 'visibility', 'visible'
 
     for i in [0...3]
-      app.lineButton[i].css 'top', gap*3+buttonWidth+(buttonWidth+gap)*i
+      app.lineButtons[i]
+        .css 'top', gap*3+buttonWidth+(buttonWidth+gap)*i
         .css 'left', canvasSize+gap
         .css 'width', buttonWidth
         .css 'height', buttonHeight
         .css 'visibility', 'visible'
 
-      app.colorButton[i].css 'top', gap*7+buttonWidth*4+(buttonWidth+gap)*i
+      app.colorButtons[i]
+        .css 'top', gap*7+buttonWidth*4+(buttonWidth+gap)*i
         .css 'left', canvasSize+gap
         .css 'width', buttonWidth
         .css 'height', buttonHeight
@@ -98,28 +111,27 @@ resize = ->
 
 initElements = ->
   app.canvas = $('<canvas>')
-  $('body').append(app.canvas)
+  $('body').append app.canvas
 
   app.uploadButton = $('<input type="button">')
     .css 'position', 'absolute'
     .css 'visibility', 'hidden'
     .attr 'value', 'UP'
-  $('body').append(app.uploadButton)
+  $('body').append app.uploadButton
 
-  app.lineButton = []
-  app.colorButton = []
-  for i in [0...3]
-    app.lineButton[i] = $('<img>')
+  app.lineButtons = for i in [0...3]
+    $('<img>')
       .css 'position', 'absolute'
       .css 'visibility', 'hidden'
-      .attr 'src', '/images/line'+(i+1)+'.png'
-    $('body').append(app.lineButton[i])
+      .attr 'src', "/images/line#{i+1}.png"
+  $('body').append button for button in app.lineButtons
 
-    app.colorButton[i] = $('<img>')
+  app.colorButtons = for i in [0..3]
+    $('<img>')
       .css 'position', 'absolute'
       .css 'visibility', 'hidden'
-      .attr 'src', '/images/color'+(i+1)+'.png'
-    $('body').append(app.colorButton[i])
+      .attr 'src', "images/color#{i+1}.png"
+  $('body').append button for button in app.colorButtons
 
 initParams = ->
   window.devicePixelRatio = 1.0
@@ -127,38 +139,36 @@ initParams = ->
   app.canvasX = app.canvas.offset()["left"]
   app.canvasY = app.canvas.offset()["top"]
 
-  app.crd = {cur:{x:0,y:0},pre:{x:0,y:0}}
+  app.crd = {cur: [0, 0], pre: [0, 0]}
   app.drawing = false
   app.lineWidth = 15
   app.strokeStyle = "#000"
 
   app.context = app.canvas[0].getContext('2d')  # jQueryは配列になってるらしいのでこういう細工が必要
 
-  app.lineButton[0].on 'click', (e) ->
+  app.lineButtons[0].on 'click', (e) ->
     app.lineWidth = 3
-  app.lineButton[1].on 'click', (e) ->
+  app.lineButtons[1].on 'click', (e) ->
     app.lineWidth = 15
-  app.lineButton[2].on 'click', (e) ->
+  app.lineButtons[2].on 'click', (e) ->
     app.lineWidth = 30
-  app.colorButton[0].on 'click', (e) ->
+  app.colorButtons[0].on 'click', (e) ->
     app.strokeStyle = 'rgb(255, 255, 255)'
-  app.colorButton[1].on 'click', (e) ->
+  app.colorButtons[1].on 'click', (e) ->
     app.strokeStyle = 'rgb(128, 128, 128)'
-  app.colorButton[2].on 'click', (e) ->
+  app.colorButtons[2].on 'click', (e) ->
     app.strokeStyle = 'rgb(0, 0, 0)'
 
 initCallbacks = ->
   app.canvas.on 'touchmove mousemove', (e) ->
     e.preventDefault()
-    if 'touchmove' == e.type
-      x = e.originalEvent.changedTouches[0].pageX
-      y = e.originalEvent.changedTouches[0].pageY
-    else
-      x = e.pageX
-      y = e.pageY
-    x -= app.canvasX
-    y -= app.canvasY
- 
+    [x, y] =
+      if 'touchmove' == e.type
+        [e.originalEvent.changedTouches[0].pageX, e.originalEvent.changedTouches[0].pageY]
+      else
+        [e.pageX, e.pageY]
+    [x, y] = [x - app.canvasX, y - app.canvasY]
+
     return if x == app.width/2 && y == app.width/2 # GalaxyNexusのバグ? 回避
 
     if app.drawing
@@ -168,32 +178,26 @@ initCallbacks = ->
       app.context.lineCap = "round"
       app.context.strokeStyle = app.strokeStyle
       app.context.lineWidth = app.lineWidth
-      app.context.moveTo app.crd.pre.x, app.crd.pre.y
-      app.crd.cur.x = x
-      app.crd.cur.y = y
-      app.context.lineTo app.crd.cur.x, app.crd.cur.y
-      app.crd.pre.x = app.crd.cur.x
-      app.crd.pre.y = app.crd.cur.y
+      app.context.moveTo app.crd.pre[0], app.crd.pre[1]
+      app.crd.cur = [x, y]
+      app.context.lineTo app.crd.cur[0], app.crd.cur[1]
+      app.crd.pre = app.crd.cur
       app.context.stroke()
       app.context.closePath()
-    else
-      app.crd.pre.x = app.crd.cur.x
-      app.crd.pre.y = app.crd.cur.y
-      app.crd.cur.x = x
-      app.crd.cur.y = y
+    #else
+    #  app.crd.pre.x = app.crd.cur.x
+    #  app.crd.pre.y = app.crd.cur.y
+    #  app.crd.cur.x = x
+    #  app.crd.cur.y = y
 
   app.canvas.on 'touchstart mousedown', (e) ->
     e.preventDefault()
-    if 'touchstart' == e.type
-      x = e.originalEvent.changedTouches[0].pageX
-      y = e.originalEvent.changedTouches[0].pageY
-    else
-      x = e.pageX
-      y = e.pageY
-    x -= app.canvasX
-    y -= app.canvasY
-    app.crd.pre.x = x
-    app.crd.pre.y = y
+    [x, y] =
+      if 'touchstart' == e.type
+        [e.originalEvent.changedTouches[0].pageX, e.originalEvent.changedTouches[0].pageY]
+      else
+        [e.pageX, e.pageY]
+    app.crd.pre = [x - app.canvasX, y - app.canvasY]
     app.drawing = true
 
   app.canvas.on 'touchend mouseup', (e) ->
@@ -212,8 +216,3 @@ initCallbacks = ->
         location.href = data  # Gyazoページに移動
 
   $(window).on 'resize', resize
-
-initElements()
-initParams()
-initCallbacks()
-resize()
