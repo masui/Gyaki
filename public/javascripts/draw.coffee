@@ -1,6 +1,7 @@
 #
 # 「楽ギャキ」システム Gyaki.com
 #  2013/01/05 11:43:09 masui
+#  2015/01/04 23:20:10 Cofferに書き直し
 #
 
 app = {}
@@ -172,7 +173,8 @@ initCallbacks = ->
     return if x == app.width/2 && y == app.width/2 # GalaxyNexusのバグ? 回避
 
     if app.drawing
-      # 線の属性はこのように毎回セットしないとうまく描けなかったりする
+      # preからcurまで線を引く
+      # 線の属性はこのように毎回セットしないとうまく描けなかったりする...
       app.context.beginPath()
       app.context.lineJoin = "round"
       app.context.lineCap = "round"
@@ -184,11 +186,6 @@ initCallbacks = ->
       app.crd.pre = app.crd.cur
       app.context.stroke()
       app.context.closePath()
-    #else
-    #  app.crd.pre.x = app.crd.cur.x
-    #  app.crd.pre.y = app.crd.cur.y
-    #  app.crd.cur.x = x
-    #  app.crd.cur.y = y
 
   app.canvas.on 'touchstart mousedown', (e) ->
     e.preventDefault()
