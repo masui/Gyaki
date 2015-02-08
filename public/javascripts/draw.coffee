@@ -34,15 +34,15 @@ resize = ->
     # Gyazo.comから画像を取得するとクロスドメインでエラーになるので
     # Gyaki.com/gyazodataから間接的に画像を取得する
     img = new Image()
-   	img.src = "/gyazodata/#{gyazoImageID}"
-   	img.onload = ->
+    img.src = "/gyazodata/#{gyazoImageID}"
+    img.onload = ->
       app.context.drawImage(img, 0, 0)
 
   orientation = 
     if window.orientation
       # タブレットのブラウザではwindow.orientationという値に
       # -90, 0, 90, 180 などの値が入る
-     	if window.orientation == '0' || window.orientation == '180'
+      if window.orientation == '0' || window.orientation == '180'
         'portrait'
       else
         [app.width, app.height] = [app.height, app.width]
@@ -56,24 +56,25 @@ resize = ->
   app.canvas
     .attr 'width', canvasSize
     .attr 'height', canvasSize
-  app.context.fillStyle = '#FFF'
+  app.context.fillStyle = '#fff'
   app.context.fillRect 0, 0, app.width, app.height
-  alert "fillrect"
+
+  #orientation = 'portrait'
 
   if orientation == 'portrait'
- 	  buttonWidth = app.width / 10
- 	  buttonHeight = buttonWidth
+    buttonWidth = app.width / 10
+    buttonHeight = buttonWidth
     gap = (app.width - (buttonWidth * 7)) / 11
 
     app.uploadButton
       .css 'top', app.width+gap
       .css 'left', gap
       .css 'width', buttonWidth
-      .css 'height', nbuttonHeight
+      .css 'height', buttonHeight
       .css 'visibility', 'visible'
 
     for i in [0...3]
- 	    app.lineButtons[i]
+      app.lineButtons[i]
         .css 'top', app.width+gap
         .css 'left', gap*3+buttonWidth+(buttonWidth+gap)*i
         .css 'width', buttonWidth
@@ -177,11 +178,11 @@ initCallbacks = ->
     if app.drawing
       # preからcurまで線を引く
       # 線の属性はこのように毎回セットしないとうまく描けなかったりする...
-      app.context.beginPath()
       app.context.lineJoin = "round"
       app.context.lineCap = "round"
       app.context.strokeStyle = app.strokeStyle
       app.context.lineWidth = app.lineWidth
+      app.context.beginPath()
       app.context.moveTo app.crd.pre[0], app.crd.pre[1]
       app.crd.cur = [x, y]
       app.context.lineTo app.crd.cur[0], app.crd.cur[1]
