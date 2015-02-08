@@ -178,6 +178,10 @@ initCallbacks = ->
     if app.drawing
       # preからcurまで線を引く
       # 線の属性はこのように毎回セットしないとうまく描けなかったりする...
+      #
+      # 何故かNexus6でうまく動かない。stroke()するたびに全部クリアしてしまう。
+      # 解決方法は不明。(2015/02/08 20:01:47)
+      #
       app.context.lineJoin = "round"
       app.context.lineCap = "round"
       app.context.strokeStyle = app.strokeStyle
