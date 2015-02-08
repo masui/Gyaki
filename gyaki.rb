@@ -13,7 +13,7 @@ require 'net/http'
 # Gyazo.comから画像を取得するとクロスドメインでエラーになるので
 # Gyaki.com/gyazodataから間接的に画像を取得する
 get '/gyazodata/:id' do |id|
-  res = Net::HTTP.start("gyazo.com",80){|http|
+  res = Net::HTTP.start("i.gyazo.com",80){|http|
     http.get("/"+id+".png");
   }
   res.read_body
