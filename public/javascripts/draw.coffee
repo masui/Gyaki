@@ -53,10 +53,12 @@ resize = ->
       else
         'portrait'
 
-  app.canvas.attr 'width', canvasSize
-    .attr('height',canvasSize)
+  app.canvas
+    .attr 'width', canvasSize
+    .attr 'height', canvasSize
   app.context.fillStyle = '#FFF'
   app.context.fillRect 0, 0, app.width, app.height
+  alert "fillrect"
 
   if orientation == 'portrait'
  	  buttonWidth = app.width / 10

@@ -59,6 +59,10 @@ EOF
   res.read_body
 end
 
+get '/' do
+  redirect 'index.html'
+end
+
 get '/:id1/:id2' do |gyazoUserID,gyazoImageID|
   @gyazoUserID = gyazoUserID
   @gyazoImageID = gyazoImageID
