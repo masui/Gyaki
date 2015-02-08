@@ -28,7 +28,7 @@ resize = ->
   app.width = browserWidth()
   app.height = browserHeight()
   canvasSize = if app.height < app.width then app.height else app.width
-  
+
   if gyazoImageID
     # http://paulownia.hatenablog.com/entry/20100602/1275493299
     # Gyazo.comから画像を取得するとクロスドメインでエラーになるので
@@ -39,27 +39,30 @@ resize = ->
       app.context.drawImage(img, 0, 0)
 
   orientation = 
-    if window.orientation
-      # タブレットのブラウザではwindow.orientationという値に
-      # -90, 0, 90, 180 などの値が入る
-      if window.orientation == '0' || window.orientation == '180'
-        'portrait'
-      else
-        [app.width, app.height] = [app.height, app.width]
-        'landscape'
+    #if window.orientation
+    #  alert "window.orientation = #{window.orientation}"
+    #  # タブレットのブラウザではwindow.orientationという値に
+    #  # -90, 0, 90, 180 などの値が入る
+    #  if window.orientation == '0' || window.orientation == '180'
+    #    'portrait'
+    #  else
+    #    [app.width, app.height] = [app.height, app.width]
+    #    'landscape'
+    #else
+    #  if app.width > app.height
+    #    'landscape'
+    #  else
+    #    'portrait'
+    if app.width > app.height
+      'landscape'
     else
-      if app.width > app.height
-        'landscape'
-      else
-        'portrait'
+      'portrait'
 
   app.canvas
     .attr 'width', canvasSize
     .attr 'height', canvasSize
   app.context.fillStyle = '#fff'
   app.context.fillRect 0, 0, app.width, app.height
-
-  #orientation = 'portrait'
 
   if orientation == 'portrait'
     buttonWidth = app.width / 10
@@ -182,17 +185,17 @@ initCallbacks = ->
       # 何故かNexus6でうまく動かない。stroke()するたびに全部クリアしてしまう。
       # 解決方法は不明。(2015/02/08 20:01:47)
       #
+      app.crd.cur = [x, y]
+      app.context.beginPath()
       app.context.lineJoin = "round"
       app.context.lineCap = "round"
       app.context.strokeStyle = app.strokeStyle
       app.context.lineWidth = app.lineWidth
-      app.context.beginPath()
       app.context.moveTo app.crd.pre[0], app.crd.pre[1]
-      app.crd.cur = [x, y]
       app.context.lineTo app.crd.cur[0], app.crd.cur[1]
-      app.crd.pre = app.crd.cur
       app.context.stroke()
       app.context.closePath()
+      app.crd.pre = app.crd.cur
 
   app.canvas.on 'touchstart mousedown', (e) ->
     e.preventDefault()
