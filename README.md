@@ -1,13 +1,15 @@
 # [Gyaki](http://Gyaki.com/)
 
 ![](http://gyazo.com/52c5854c20c5e3ac51faabc6b5f87596.png)
+![](http://gyazo.com/cf139b72c14c86d56c1a710624c4f97c.png)
+![](http://gyazo.com/747b880b4349fcb597224098904d21bd.png)
 
 * [Gyaki](http://Gyaki.com/)は、ブラウザ上で描いた絵を即座に[Gyazo](http://Gyazo.com)にアップロードできる「楽ギャキ」システムです。
-* タブレットやパソコンでちょっとした絵を書くのに便利です
-* 既存のGyazo画像に上書きして新しいGyazoページとして保存することもできます。
-* 「http://Gyaki.com/GyazoのユーザID」というURLにアクセスして絵を描くとGyazoのページでリスト表示できます
+* タブレットやパソコンでちょっとした絵を書くのに便利です。
+* 「http://Gyaki.com/(GyazoのユーザID)」というURLにアクセスして絵を描くとGyazoのページでリスト表示できます
 * たとえばユーザIDが「1234567」の場合、http://Gyaki.com/1234567にアクセスして絵を描いてアップロードします
 * 既存のGyazo画像上に絵を描くことができます
+* 既存のGyazo画像に上書きして新しいGyazoページとして保存することもできます。
 * GyazoのユーザIDはパソコン中のファイルに記録されています
 
   Macの場合: ~/Library/Gyazo/id 
