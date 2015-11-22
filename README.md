@@ -1,6 +1,6 @@
 # [Gyaki](http://Gyaki.com/)
 
-![](http://gyazo.com/52c5854c20c5e3ac51faabc6b5f87596.png)
+<img src="http://gyazo.com/52c5854c20c5e3ac51faabc6b5f87596.png" width=300>
 
 * [Gyaki](http://Gyaki.com/)は、ブラウザ上で描いた絵を即座に[Gyazo](http://Gyazo.com)にアップロードできるシステムです。
 * 既存のGyazo画像に上書きして新しいGyazoページとして保存することもできます。
