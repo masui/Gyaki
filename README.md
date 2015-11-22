@@ -1,6 +1,6 @@
 # [Gyaki](http://Gyaki.com/)
 
-![](http://gyazo.com/52c5854c20c5e3ac51faabc6b5f87596.png")
+![](http://gyazo.com/52c5854c20c5e3ac51faabc6b5f87596.png)
 
 * [Gyaki](http://Gyaki.com/)は、ブラウザ上で描いた絵を即座に[Gyazo](http://Gyazo.com)にアップロードできるシステムです。
 * 既存のGyazo画像に上書きして新しいGyazoページとして保存することもできます。
@@ -18,3 +18,14 @@
 [[https://github.com/masui/Gyaki ソースコード]]をGitHubで公開しています
 [[TODO]]
 
+
+GyazoのユーザIDはパソコン中のファイルに記録されています
+ Macの場合: ~/Library/Gyazo/id 
+ Windowsの場合: ???
+ 
+ 既存のGyazo画像を指定して、その上に絵を描くことができます
+http://Gyaki.com/[[GyazoのユーザID]]/Gyazo画像ID
+ e.g. [[http://Gyaki.com/1234567/52c5854c20c5e3ac51faabc6b5f87596]]
+ブックマークレットを使うと便利です
+ http://Gyaki.com/bookmarklet/[[GyazoのユーザID]] でブックマークレット登録できます
+ e.g. [[http://Gyaki.com/bookmarklet/1234567]]
