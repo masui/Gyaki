@@ -1,8 +1,8 @@
 # [Gyaki](http://Gyaki.com/)
 
-<img src="http://gyazo.com/52c5854c20c5e3ac51faabc6b5f87596.png" width=100>
-<img src="http://gyazo.com/cf139b72c14c86d56c1a710624c4f97c.png" width=100>
-<img src="http://gyazo.com/747b880b4349fcb597224098904d21bd.png" width=100>
+<img src="http://gyazo.com/52c5854c20c5e3ac51faabc6b5f87596.png" width="100">
+<img src="http://gyazo.com/cf139b72c14c86d56c1a710624c4f97c.png" width="100">
+<img src="http://gyazo.com/747b880b4349fcb597224098904d21bd.png" width="100">
 
 * [Gyaki](http://Gyaki.com/)は、ブラウザ上で描いた絵を即座に[Gyazo](http://Gyazo.com)にアップロードできる「楽ギャキ」システムです。
 * タブレットやパソコンでちょっとした絵を書くのに便利です。

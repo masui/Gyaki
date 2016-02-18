@@ -223,4 +223,4 @@ initCallbacks = ->
       success: (data, textStatus, jqXHR ) ->
         location.href = data  # Gyazoページに移動
 
-  $(window).on 'resize', resize
+  # $(window).on 'resize', resize
