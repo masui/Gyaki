@@ -16,7 +16,8 @@ get '/gyazodata/:id' do |id|
   res = Net::HTTP.start("i.gyazo.com",80){|http|
     http.get("/"+id+".png");
   }
-  res.read_body
+  # res.read_body
+  res.response.body
 end
 
 get '/bookmarklet/:id' do |id|
@@ -56,7 +57,8 @@ EOF
   res = Net::HTTP.start(gyazo_host,80){|http|
     http.post(gyazo_cgi,data,header)
   }
-  res.read_body
+  # res.read_body
+  res.response.body
 end
 
 get '/' do
