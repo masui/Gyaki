@@ -35,7 +35,7 @@ post '/upload' do
   imagedata = Base64.decode64(data)
 
   boundary = '----BOUNDARYBOUNDARY----'
-  gyazo_host = 'gyazo.com'
+  gyazo_host = 'upload.gyazo.com'
   gyazo_cgi = '/upload.cgi'
   gyazo_ua   = 'Gyazo/1.0'
   data = <<EOF
