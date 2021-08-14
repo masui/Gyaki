@@ -4,6 +4,8 @@
 #  2015/01/04 23:20:10 Cofferに書き直し
 #  2015/02/08 23:46:08 Nexus6で動くように四苦八苦
 #
+# http://gyaki.org/index.html
+#
 
 app = {}
 
