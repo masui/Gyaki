@@ -143,31 +143,52 @@ initElements = ->
       .attr 'src', "images/color#{i+1}.png"
   $('body').append button for button in app.colorButtons
 
+updateSelection = ->
+  lineWidths = [3, 15, 30]
+  for i in [0...3]
+    if lineWidths[i] == app.lineWidth
+      app.lineButtons[i].css('background-color', 'rgba(0, 0, 0, 0.15)').css('border-radius', '6px').css('border', 'none')
+    else
+      app.lineButtons[i].css('background-color', 'transparent').css('border-radius', '6px').css('border', 'none')
+  colors = ['rgb(255, 255, 255)', 'rgb(128, 128, 128)', 'rgb(0, 0, 0)']
+  for i in [0...3]
+    if colors[i] == app.strokeStyle
+      app.colorButtons[i].css('background-color', 'rgba(0, 0, 0, 0.15)').css('border-radius', '6px').css('border', 'none')
+    else
+      app.colorButtons[i].css('background-color', 'transparent').css('border-radius', '6px').css('border', 'none')
+
 initParams = ->
   window.devicePixelRatio = 1.0
- 
+
   app.canvasX = app.canvas.offset()["left"]
   app.canvasY = app.canvas.offset()["top"]
 
   app.crd = {cur: [0, 0], pre: [0, 0]}
   app.drawing = false
   app.lineWidth = 15
-  app.strokeStyle = "#000"
+  app.strokeStyle = 'rgb(0, 0, 0)'
 
   app.context = app.canvas[0].getContext('2d')  # jQueryは配列になってるらしいのでこういう細工が必要
 
   app.lineButtons[0].on 'click', (e) ->
     app.lineWidth = 3
+    updateSelection()
   app.lineButtons[1].on 'click', (e) ->
     app.lineWidth = 15
+    updateSelection()
   app.lineButtons[2].on 'click', (e) ->
     app.lineWidth = 30
+    updateSelection()
   app.colorButtons[0].on 'click', (e) ->
     app.strokeStyle = 'rgb(255, 255, 255)'
+    updateSelection()
   app.colorButtons[1].on 'click', (e) ->
     app.strokeStyle = 'rgb(128, 128, 128)'
+    updateSelection()
   app.colorButtons[2].on 'click', (e) ->
     app.strokeStyle = 'rgb(0, 0, 0)'
+    updateSelection()
+  updateSelection()
 
 initCallbacks = ->
   app.canvas.on 'touchmove mousemove', (e) ->

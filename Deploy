@@ -1,0 +1,4 @@
+つまりデプロイ手順は:                                                                                                                                                                           
+                  
+  1. ローカルで make push                                                                                                                                                                          2. さくらのサーバー(Gyaki.org)にSSH
+  3. cd /home/masui/Gyaki && git pull                                                                                                                                                              4. JSを変更した場合はブラウザキャッシュに注意（サービス再起動は不要、Sinatraが静的ファイルを配信しているだけなので）                                                                             5. gyaki.rb を変更した場合は sudo systemctl restart gyaki
