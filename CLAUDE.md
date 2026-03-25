@@ -21,7 +21,7 @@ CoffeeScript のコンパイル後、`http://localhost:4567` で起動。
 gyaki.org はさくらインターネットのサーバーで稼働。自動デプロイは無い。
 
 1. `make push` (GitHub にpush)
-2. さくらのサーバーにSSH
+2. Gyaki.org(さくらのサーバー)にSSH
 3. `cd /home/masui/Gyaki && git pull`
 4. `gyaki.rb` を変更した場合: `sudo systemctl restart gyaki`
 5. JS/静的ファイルのみの変更なら再起動不要（ブラウザキャッシュに注意）
