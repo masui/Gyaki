@@ -108,6 +108,26 @@ initElements = function() {
   return results;
 };
 
+updateSelection = function() {
+  var i, lineWidths, j;
+  lineWidths = [3, 15, 30];
+  for (i = j = 0; j < 3; i = ++j) {
+    if (lineWidths[i] === app.lineWidth) {
+      app.lineButtons[i].css('background-color', 'rgba(0, 0, 0, 0.15)').css('border-radius', '6px').css('border', 'none');
+    } else {
+      app.lineButtons[i].css('background-color', 'transparent').css('border-radius', '6px').css('border', 'none');
+    }
+  }
+  var colors = ['rgb(255, 255, 255)', 'rgb(128, 128, 128)', 'rgb(0, 0, 0)'];
+  for (i = j = 0; j < 3; i = ++j) {
+    if (colors[i] === app.strokeStyle) {
+      app.colorButtons[i].css('background-color', 'rgba(0, 0, 0, 0.15)').css('border-radius', '6px').css('border', 'none');
+    } else {
+      app.colorButtons[i].css('background-color', 'transparent').css('border-radius', '6px').css('border', 'none');
+    }
+  }
+};
+
 initParams = function() {
   window.devicePixelRatio = 1.0;
   app.canvasX = app.canvas.offset()["left"];
@@ -118,26 +138,33 @@ initParams = function() {
   };
   app.drawing = false;
   app.lineWidth = 15;
-  app.strokeStyle = "#000";
+  app.strokeStyle = 'rgb(0, 0, 0)';
   app.context = app.canvas[0].getContext('2d');
   app.lineButtons[0].on('click', function(e) {
-    return app.lineWidth = 3;
+    app.lineWidth = 3;
+    updateSelection();
   });
   app.lineButtons[1].on('click', function(e) {
-    return app.lineWidth = 15;
+    app.lineWidth = 15;
+    updateSelection();
   });
   app.lineButtons[2].on('click', function(e) {
-    return app.lineWidth = 30;
+    app.lineWidth = 30;
+    updateSelection();
   });
   app.colorButtons[0].on('click', function(e) {
-    return app.strokeStyle = 'rgb(255, 255, 255)';
+    app.strokeStyle = 'rgb(255, 255, 255)';
+    updateSelection();
   });
   app.colorButtons[1].on('click', function(e) {
-    return app.strokeStyle = 'rgb(128, 128, 128)';
+    app.strokeStyle = 'rgb(128, 128, 128)';
+    updateSelection();
   });
-  return app.colorButtons[2].on('click', function(e) {
-    return app.strokeStyle = 'rgb(0, 0, 0)';
+  app.colorButtons[2].on('click', function(e) {
+    app.strokeStyle = 'rgb(0, 0, 0)';
+    updateSelection();
   });
+  updateSelection();
 };
 
 initCallbacks = function() {
